@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\Items\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -14,37 +16,36 @@ class ItemsTable
     {
         return $table
             ->columns([
-                TextColumn::make('nama_barang')
-                    ->searchable(),
-                TextColumn::make('kode_barang')
-                    ->searchable(),
-                TextColumn::make('stok')
-                    ->numeric()
+                ImageColumn::make('image')
+                ->label('Logo')
+                ->disk('public'),
+
+                TextColumn::make('nama_perusahaan')
+                    ->label('Perusahaan')
+                    ->searchable()
                     ->sortable(),
-                TextColumn::make('harga')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('kondisi')
+
+            TextColumn::make('nama_kontak')
+                    ->label('Contact Person')
                     ->searchable(),
-                TextColumn::make('lokasi')
-                    ->searchable(),
-                TextColumn::make('users_id')
-                    ->numeric()
-                    ->sortable(),
+
+                TextColumn::make('telepon')
+                    ->label('Telepon'),
+
+                TextColumn::make('email')
+                    ->label('Email'),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Ditambahkan')
+                    ->dateTime('d M Y')
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

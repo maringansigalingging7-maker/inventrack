@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Categories\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
@@ -13,13 +14,23 @@ class CategoryForm
         return $schema
             ->components([
                 TextInput::make('nama_kategori')
-                    ->required(),
+                ->label('Nama Kategori')
+                ->placeholder('Contoh: Elektronik, Furniture, ATK')
+                ->required()
+                ->maxLength(255),
+
                 Textarea::make('deskripsi')
-                    ->required()
-                    ->columnSpanFull(),
-                Textarea::make('image')
-                    ->required()
-                    ->columnSpanFull(),
+                ->label('Deskripsi Kategori')
+                ->placeholder('Jelaskan singkat tentang kategori ini')
+                ->required()
+                ->rows(3),
+
+                FileUpload::make('image')
+                ->label('Foto Kategori')
+                ->image()
+                ->directory('categories')
+                ->visibility('public')
+                ->required(),
             ]);
     }
 }
