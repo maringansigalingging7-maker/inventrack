@@ -29,4 +29,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    // ✅ TAMBAHKAN DI SINI (sebelum kurung kurawal penutup)
+    public function items()
+    {
+        return $this->hasMany(Item::class, 'users_id');
+    }
 }
+
