@@ -1,2 +1,9 @@
 *
 !.gitignore
+!items/
+!categories/
+!suppliers/
+!/items/**
+!/categories/**
+!/suppliers/**
+livewire-tmp/
