@@ -15,64 +15,43 @@ class SupplierForm
     {
         return $schema
             ->components([
-                TextInput::make('nama_barang')
-                ->label('Nama Barang')
-                ->placeholder('Contoh: Laptop Lenovo ThinkPad')
+                TextInput::make('nama_perusahaan')
+                ->label('Nama Perusahaan')
+                ->placeholder('Contoh: PT. Sumber Makmur')
                 ->required()
                 ->maxLength(255),
 
-            TextInput::make('kode_barang')
-                ->label('Kode Barang')
-                ->placeholder('Contoh: BRG-001')
+            TextInput::make('nama_kontak')
+                ->label('Nama Contact Person')
+                ->placeholder('Contoh: Budi Santoso')
                 ->required()
-                ->unique(ignoreRecord: true)
                 ->maxLength(255),
 
-            TextInput::make('stok')
-                ->label('Jumlah Stok')
-                ->numeric()
+            TextInput::make('telepon')
+                ->label('Nomor Telepon')
+                ->placeholder('Contoh: 08123456789')
                 ->required()
-                ->minValue(0),
+                ->maxLength(15),
 
-            TextInput::make('harga')
-                ->label('Harga Satuan (Rp)')
-                ->numeric()
+            TextInput::make('email')
+                ->label('Email')
+                ->email()
+                ->placeholder('Contoh: supplier@email.com')
                 ->required()
-                ->minValue(0)
-                ->prefix('Rp'),
+                ->maxLength(255),
 
-            Select::make('kondisi')
-                ->label('Kondisi Barang')
-                ->options([
-                    'Baik' => 'Baik',
-                    'Rusak Ringan' => 'Rusak Ringan',
-                    'Rusak Berat' => 'Rusak Berat',
-                ])
-                ->required(),
-
-            Select::make('lokasi')
-                ->label('Lokasi Penyimpanan')
-                ->options([
-                    'Gudang A' => 'Gudang A',
-                    'Gudang B' => 'Gudang B',
-                    'Gudang C' => 'Gudang C',
-                ])
-                ->required(),
-
-            Textarea::make('deskripsi')
-                ->label('Deskripsi Barang')
-                ->placeholder('Jelaskan detail barang ini')
+            Textarea::make('alamat')
+                ->label('Alamat Lengkap')
+                ->placeholder('Jl. Contoh No. 123, Kota, Provinsi')
                 ->required()
                 ->rows(3),
 
             FileUpload::make('image')
-                ->label('Foto Barang')
+                ->label('Logo Perusahaan')
                 ->image()
-                ->directory('items')
+                ->directory('suppliers')
                 ->visibility('public')
                 ->required(),
-
-            Hidden::make('users_id'),
             ]);
     }
 }

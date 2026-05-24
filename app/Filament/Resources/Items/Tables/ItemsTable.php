@@ -17,28 +17,52 @@ class ItemsTable
         return $table
             ->columns([
                 ImageColumn::make('image')
-                ->label('Logo')
+                ->circular()
+                ->width(50)
+                ->height(50)
+                ->label('Foto')
                 ->disk('public'),
 
-                TextColumn::make('nama_perusahaan')
-                    ->label('Perusahaan')
-                    ->searchable()
-                    ->sortable(),
+            TextColumn::make('kode_barang')
+                ->label('Kode')
+                ->searchable()
+                ->sortable(),
 
-            TextColumn::make('nama_kontak')
-                    ->label('Contact Person')
-                    ->searchable(),
+            TextColumn::make('nama_barang')
+                ->label('Nama Barang')
+                ->searchable()
+                ->sortable(),
 
-                TextColumn::make('telepon')
-                    ->label('Telepon'),
+            TextColumn::make('stok')
+                ->label('Stok')
+                ->sortable(),
 
-                TextColumn::make('email')
-                    ->label('Email'),
+            TextColumn::make('harga')
+                ->label('Harga')
+                ->money('IDR')
+                ->sortable(),
 
-                TextColumn::make('created_at')
-                    ->label('Ditambahkan')
-                    ->dateTime('d M Y')
-                    ->sortable(),
+            TextColumn::make('kondisi')
+                ->label('Kondisi')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    'Baik' => 'success',
+                    'Rusak Ringan' => 'warning',
+                    'Rusak Berat' => 'danger',
+                    default => 'gray',
+                }),
+
+            TextColumn::make('lokasi')
+                ->label('Lokasi')
+                ->badge(),
+
+            TextColumn::make('user.name')
+                ->label('Ditambahkan Oleh'),
+
+            TextColumn::make('created_at')
+                ->label('Tanggal')
+                ->dateTime('d M Y')
+                ->sortable(),
             ])
             ->filters([
                 //

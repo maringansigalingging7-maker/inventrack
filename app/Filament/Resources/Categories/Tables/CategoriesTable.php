@@ -18,7 +18,10 @@ class CategoriesTable
             ->columns([
                 ImageColumn::make('image')
                 ->label('Foto')
-                ->disk('public'),
+                ->disk('public')
+                ->circular()
+                ->width(50)
+                ->height(50),
 
                 TextColumn::make('nama_kategori')
                     ->label('Kategori')

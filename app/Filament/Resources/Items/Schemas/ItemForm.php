@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\Items\Schemas;
 
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
@@ -13,43 +15,64 @@ class ItemForm
     {
         return $schema
             ->components([
-                TextInput::make('nama_perusahaan')
-                ->label('Nama Perusahaan')
-                ->placeholder('Contoh: PT. Sumber Makmur')
+                TextInput::make('nama_barang')
+                ->label('Nama Barang')
+                ->placeholder('Contoh: Laptop Lenovo ThinkPad')
                 ->required()
                 ->maxLength(255),
 
-            TextInput::make('nama_kontak')
-                ->label('Nama Contact Person')
-                ->placeholder('Contoh: Budi Santoso')
+            TextInput::make('kode_barang')
+                ->label('Kode Barang')
+                ->placeholder('Contoh: BRG-001')
                 ->required()
+                ->unique(ignoreRecord: true)
                 ->maxLength(255),
 
-            TextInput::make('telepon')
-                ->label('Nomor Telepon')
-                ->placeholder('Contoh: 08123456789')
+            TextInput::make('stok')
+                ->label('Jumlah Stok')
+                ->numeric()
                 ->required()
-                ->maxLength(15),
+                ->minValue(0),
 
-            TextInput::make('email')
-                ->label('Email')
-                ->email()
-                ->placeholder('Contoh: supplier@email.com')
+            TextInput::make('harga')
+                ->label('Harga Satuan (Rp)')
+                ->numeric()
                 ->required()
-                ->maxLength(255),
+                ->minValue(0)
+                ->prefix('Rp'),
 
-            Textarea::make('alamat')
-                ->label('Alamat Lengkap')
-                ->placeholder('Jl. Contoh No. 123, Kota, Provinsi')
+            Select::make('kondisi')
+                ->label('Kondisi Barang')
+                ->options([
+                    'Baik' => 'Baik',
+                    'Rusak Ringan' => 'Rusak Ringan',
+                    'Rusak Berat' => 'Rusak Berat',
+                ])
+                ->required(),
+
+            Select::make('lokasi')
+                ->label('Lokasi Penyimpanan')
+                ->options([
+                    'Gudang A' => 'Gudang A',
+                    'Gudang B' => 'Gudang B',
+                    'Gudang C' => 'Gudang C',
+                ])
+                ->required(),
+
+            Textarea::make('deskripsi')
+                ->label('Deskripsi Barang')
+                ->placeholder('Jelaskan detail barang ini')
                 ->required()
                 ->rows(3),
 
             FileUpload::make('image')
-                ->label('Logo Perusahaan')
+                ->label('Foto Barang')
                 ->image()
-                ->directory('suppliers')
+                ->directory('items')
                 ->visibility('public')
                 ->required(),
+
+            Hidden::make('users_id'),
             ]);
     }
 }
